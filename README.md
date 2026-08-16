@@ -58,6 +58,30 @@ The common thread: these tones live in a narrow band just above what most adults
 
 ---
 
+## Updates
+
+UltraSniff keeps growing. Here's what has been added and, more importantly, why each piece matters when you're trying to see and understand the signals around you.
+
+**Hear more, miss less — the decoder bank.** Reception no longer runs a single decoder. It runs a *bank* of them in parallel: every known data-over-sound protocol at once, several copies tuned to slightly shifted base frequencies (so a transmitter that is a little off-frequency or deliberately detuned still lines up), and a spread-spectrum variant. In practice this means a signal gets caught even when it doesn't sit exactly where a textbook says it should — and when one does decode, the log tells you how far it was shifted.
+
+**Decode anything, offline.** Some signals won't give themselves up in real time. Any captured `.wav` — including the ones the Signal Hunter grabs automatically — can be run through an exhaustive sweep that tries every protocol across a fine grid of frequency shifts and spread modes, with no time limit, plus a touch-tone (DTMF) pass. This is the "leave no stone unturned" mode: it trades speed for the best possible chance of recovering a payload. It runs as a background job and drops the result into a notification, so you can start it and walk away.
+
+**More kinds of signal.** Beyond the built-in data-over-sound protocols, UltraSniff now understands classic modulation schemes — OOK/ASK (on-off keying), FSK, and Manchester coding — and can auto-estimate their carrier and bit rate. A **demod workbench** lets you point those decoders at a recording and dial in the carrier, spacing, and baud by hand, which is exactly what you want when reverse-engineering an unknown tone you spotted on the waterfall.
+
+**Transmit anything.** The transmitter is now a full companion to the receiver: it can send not just the standard data-over-sound protocols but also OOK, FSK, DTMF, and Manchester at frequencies and bit rates you choose. That makes UltraSniff a two-way tool — generate a known signal to test a receiver you own, or to check what your own detector catches.
+
+**Cleaner reception.** An optional band-pass + automatic-gain pre-filter strips out-of-band noise and lifts weak ultrasonic tones before decoding. Imported recordings that aren't at the engine's sample rate are automatically resampled so their tones land where the decoders expect. And a rolling 30-second buffer means you can **save the last 30 seconds** of what the mic heard at any moment — useful for grabbing something the instant you notice it.
+
+**Make sense of what you find.** Detections can be grouped into a **timeline / correlation** view that shows repeated emissions ("seen 12 times, first…last"), so a one-off blip is easy to tell apart from something that keeps reappearing. You can set an **alert rule** — a text pattern that buzzes the phone and raises a notification the moment a matching payload is decoded — and export a shareable **report** of everything you've collected. Tapping the waterfall now reads out the exact frequency and level at that point.
+
+**Keep the tracker database current.** The ultrasonic-beacon fingerprints are no longer frozen in the app. You can **import a signature pack** (a small JSON file) to teach UltraSniff new beacon families as they're discovered — no update required.
+
+**On the map.** Geo-tagged detections can be viewed as individual markers, **clustered** by area, or as a **heatmap** that makes dense zones obvious at a glance. A **time slider** replays your survey over time, an optional **track** line traces your path, and there's a lightweight **geofence** alert that warns you when you're back in a place where an ultrasonic tracker was seen before.
+
+**Runs the way you want.** Handy notification actions (including a one-tap "save 30 s"), an optional restart-after-reboot, and a short first-run walkthrough that points you at the on-device calibration so you know your phone's real ultrasonic range from the start.
+
+**Smaller downloads.** Releases now ship a separate, signed APK per CPU type in addition to the universal build, so most phones download roughly half the size.
+
 ## Download & install
 
 Grab the latest APK from the **[Releases](../../releases/latest)** page and sideload it (you may need to allow "install from unknown sources" for your browser or file manager).
