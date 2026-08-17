@@ -82,6 +82,14 @@ UltraSniff keeps growing. Here's what has been added and, more importantly, why 
 
 **Smaller downloads.** Releases now ship a separate, signed APK per CPU type in addition to the universal build, so most phones download roughly half the size.
 
+**Catch the trackers that hide between the tones.** Not every beacon is a chord of tones played at once. Some send a *melody* — one tone at a time, hopping from note to note — and a detector that only looks for a stable comb walks right past them. UltraSniff now watches the peak over time as well, so a fast run of distinct ultrasonic notes is flagged for what it is. And every beacon it catches, comb or melody, is reduced to a compact **fingerprint** of its tones. That fingerprint turns scattered sightings into a story: the app can now **correlate the same emitter across time and places** — the identical beacon seen in one shop on Monday and another on Friday lines up under one id. Combs it has never seen before, if they keep reappearing, are quietly **learned** and given a name, so your personal tracker database grows itself from what you actually encounter — and you can export it to share, or import someone else's.
+
+**Sharper ears, and payloads that give themselves up.** The receiver now analyses overlapping slices of sound rather than back-to-back chunks, so short bursts are no longer smeared or missed, and every tone is pinned to a more exact frequency. When a strong signal appears and nothing standard decodes it, UltraSniff automatically tries to pull raw bits out of it with on-off and Manchester demodulation, and links whatever it recovers back to the recording it came from. For payloads you're taking apart by hand, a new **auto-solver** searches decode chains for you — un-hexing, un-Base64-ing, decompressing, XOR-ing — and stops when it finds something readable.
+
+**Yours to keep, yours to erase.** Detections are stored with far more detail now — the exact recovered bytes and a checksum, the emitter fingerprint, fix quality, and a link to any captured audio — while staying fully local. You choose how much location precision to keep (down to none) and how long to hold history before it auto-purges, and a real **wipe** clears everything, the geo log included. Records export to more formats — including **GeoJSON** and a **WiGLE**-style CSV — with proper UTC timestamps, so your survey drops cleanly into mapping and analysis tools.
+
+**Smoother in the field, and self-updating.** Detector settings now take effect **live**, without stopping and restarting reception, so you can tune sensitivity while you hunt. The waterfall gained hands-on controls — brightness, a freeze to study a moment, and a tunable low edge to zoom the band. And because UltraSniff is distributed as an APK rather than through a store, it can now **check for and install its own updates** straight from its release page, so you always have the latest version.
+
 ## Download & install
 
 Grab the latest APK from the **[Releases](../../releases/latest)** page and sideload it (you may need to allow "install from unknown sources" for your browser or file manager).
@@ -106,7 +114,8 @@ All release variants are signed with the same key, so future updates install cle
 - **Microphone** — the core function: listening for ultrasonic signals on your own device. UltraSniff only analyzes content above ~15 kHz; it is not a voice recorder.
 - **Location** *(optional)* — only used to geo-tag detections for the map if you enable wardriving.
 - **Notifications** — required to show the persistent "listening" notification while the engine runs in the background.
-- **Internet** — only to load map tiles.
+- **Internet** — to load map tiles and to check its release page for updates.
+- **Install unknown apps** *(optional)* — only used if you let UltraSniff install an update it downloaded for you.
 
 ---
 
