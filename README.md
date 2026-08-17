@@ -30,6 +30,8 @@ This is not hypothetical. Ultrasonic side-channels have been deployed commercial
 
 - **Signal360 (formerly Sonic Notify)** — Ultrasonic (and Bluetooth) beacons used for proximity marketing and audience analytics, e.g. triggering content, ads, or measurement when a device is near a venue or a broadcast.
 
+- **Fidzup** — An advertising presence beacon that plays an inaudible ~19 kHz tone from a shop's speakers; a phone carrying the listening SDK recognizes it and reports that the person entered that specific store. Its beacon format was publicly reverse-engineered, so UltraSniff can decode the beacon id itself, not just detect the tone.
+
 The common thread: these tones live in a narrow band just above what most adults can hear but well within what a phone microphone captures. That makes them a **covert side-channel** — invisible to people, generally invisible to standard privacy tooling, and therefore worth being able to see for yourself.
 
 ### Hear it for yourself: real beacon recordings
@@ -65,6 +67,8 @@ The recordings were collected by security and privacy researchers; full provenan
 
 **Beacon & payload intelligence**
 - **Ultrasonic beacon fingerprinting** — the realistic tracker detector. Instead of hoping a hidden beacon decodes to a readable string (proprietary trackers never do), it recognizes the *shape* of a beacon in the spectrum — a sparse, stable comb of strong tones — and flags likely tracking emissions, classifying common families and raising a clear **[TRACKER DETECTED]** alert.
+- **Beacon decoders** for the two trackers whose wire format is publicly known — **SilverPush** and **Fidzup** — actually recover the beacon id, not just detect the tone.
+- **Vendor recognition** by name across the whole known ecosystem of ultrasonic and near-ultrasonic systems (SilverPush, Fidzup, Shopkick, Lisnr, Signal360, Sonarax, CopSonic, Trillbit, ToneTag, Cue Audio and more), with passive "listen-only" recognizers that emit nothing clearly marked as such.
 - Automatic payload analysis: detects and expands Base64 / HEX / JSON / URLs, estimates entropy, sniffs compression, extracts identifiers (URL / IP / MAC / UUID / IMEI / GPS / timestamps), and offers a chainable transform workbench.
 
 **Geo & records**
@@ -74,6 +78,10 @@ The recordings were collected by security and privacy researchers; full provenan
 **Transmit & test (for hardware you own or are authorized to test)**
 - Data-over-sound transmitter, tone / sweep / chirp generators, WAV replay, and a device-calibration sweep that measures your phone's real usable ultrasonic band.
 
+**Countermeasures & self-awareness**
+- **Ultrasonic jammer** — a defensive firewall that floods a chosen band with noise so a nearby tracking beacon can't be cleanly demodulated (acoustic only, with honest range limits shown in-app).
+- **Active-transmission monitor** — shows what *your own phone* is emitting: the active audio-playback streams and, best-effort, the app behind them.
+
 **Platform**
 - Background foreground-service listening (survives a locked screen, with a persistent notification), dark "terminal" interface, English + Italian.
 
@@ -82,6 +90,8 @@ The recordings were collected by security and privacy researchers; full provenan
 ## Updates
 
 UltraSniff keeps growing. Here's what has been added and, more importantly, why each piece matters when you're trying to see and understand the signals around you.
+
+**Name the tracker, and fight back.** Reception now recovers the beacon id of a second commercial tracker whose format is public — **Fidzup**, the ~19 kHz shop-entrance beacon — joining SilverPush as one that UltraSniff decodes rather than merely detects. Recognition was widened to the whole known ecosystem of ultrasonic and near-ultrasonic vendors (Sonarax, CopSonic, Trillbit, ToneTag, Cue Audio and more), with the passive "listen-only" systems that emit nothing honestly marked as such so you're never told a spectrum scanner can catch something it physically can't. Two new active tools round it out: an **ultrasonic jammer** that floods a band with noise so a nearby beacon can't be demodulated, and an **active-transmission monitor** that shows what your own phone is emitting and, as far as Android allows, which app is behind it.
 
 **Hear more, miss less — the decoder bank.** Reception no longer runs a single decoder. It runs a *bank* of them in parallel: every known data-over-sound protocol at once, several copies tuned to slightly shifted base frequencies (so a transmitter that is a little off-frequency or deliberately detuned still lines up), and a spread-spectrum variant. In practice this means a signal gets caught even when it doesn't sit exactly where a textbook says it should — and when one does decode, the log tells you how far it was shifted.
 
