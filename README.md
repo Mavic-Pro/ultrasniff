@@ -32,6 +32,27 @@ This is not hypothetical. Ultrasonic side-channels have been deployed commercial
 
 The common thread: these tones live in a narrow band just above what most adults can hear but well within what a phone microphone captures. That makes them a **covert side-channel** — invisible to people, generally invisible to standard privacy tooling, and therefore worth being able to see for yourself.
 
+### Hear it for yourself: real beacon recordings
+
+You don't have to take any of this on faith. The **[Releases](../../releases/latest)** page includes **`realworld-samples.zip`** (~7 MB): eleven short recordings of **genuine** ultrasonic beacons captured in the wild, curated so you can test UltraSniff against the real thing. Play a file from a PC or phone speaker near the device running UltraSniff and watch the waterfall and detector react.
+
+The set was chosen to cover every major technology with at least one easy case and one hard case:
+
+| File | What it is | Why it's included |
+|------|-----------|-------------------|
+| `silverpush_ad_geico.wav`, `silverpush_ad_hungama.wav` | SilverPush beacons extracted from **real TV commercials** (GEICO, Hungama) | The textbook positive case: very strong, near-pure tones. Start here. |
+| `shopkick_store_reno.wav`, `shopkick_store_douglas_15s.wav` | Shopkick beacons recorded with a microphone **inside real shops** of two retail chains | Two different stores = two different acoustic conditions. |
+| `signal360_topchef_tv_15s.wav` | A Signal360 beacon riding inside a real **"Top Chef" TV broadcast** | The "second screen" scenario: continuous broadband signal under programme audio. |
+| `lisnr_statictesttone.wav`, `lisnr_test1.wav` | A Lisnr static tone and an actual **data packet** | Data-over-audio rather than a plain tracking chirp. |
+| `nearby_thought_send_clean_7s.wav` | Google Nearby transmission, captured internally on the sending phone | The clean, easy Nearby case: strong, well-defined bursts. |
+| `nearby_radon_send_noisy_24s.wav` | Google Nearby captured by a microphone **at a distance** (~-72 dB) | Deliberately the hardest file in the set — a weak-signal stress test that shows where a detector's sensitivity ends. |
+| `prontoly_broadcast_12s.wav` | A Prontoly emoticon broadcast (FM-style ultrasonic modulation) | A different modulation family from everything above. |
+| `mixed_real_environment_16s.wav` | A real-environment recording with intermittent bursts from **multiple technologies** | The closest thing to what you'd actually encounter in the wild. |
+
+All files are mono 16-bit WAV at 44.1 kHz — kept lossless on purpose, because lossy formats (MP3/OGG) throw away exactly the >16 kHz band these signals live in. The signals sit around 17–21.5 kHz, so most adults will hear little or nothing during playback — which is, of course, the point. One practical tip: many consumer speakers roll off sharply above ~18 kHz, so use a decent speaker at moderate distance; the SilverPush and Lisnr files are the strongest and the easiest to start with.
+
+The recordings were collected by security and privacy researchers; full provenance, credits and license (CC BY-SA 3.0) are in the `NOTICE.txt` inside the archive.
+
 ---
 
 ## What UltraSniff does
